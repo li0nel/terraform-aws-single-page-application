@@ -102,7 +102,7 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_iam_role" "iam_role" {
-  name = "iam_role"
+  name = "iam_role_${var.stack_name}"
 
   assume_role_policy = <<EOF
 {
