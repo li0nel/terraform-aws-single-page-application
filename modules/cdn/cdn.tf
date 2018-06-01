@@ -43,11 +43,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   aliases = ["${var.stack_name}.cdn.${var.domain_name}"]
 
-  lambda_function_association {
-    event_type = "origin-request"
-    lambda_arn = "${aws_lambda_function.lambda_at_edge.arn}:${aws_lambda_function.lambda_at_edge.version}"
-  }
-
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
@@ -59,6 +54,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       cookies {
         forward = "none"
       }
+    }
+
+    lambda_function_association {
+      event_type = "origin-request"
+      lambda_arn = "${aws_lambda_function.lambda_at_edge.arn}:${aws_lambda_function.lambda_at_edge.version}"
     }
 
     viewer_protocol_policy = "redirect-to-https"
