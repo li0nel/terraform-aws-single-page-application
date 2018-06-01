@@ -23,7 +23,7 @@ provider "aws" {
 
 module "single-page-application" {
   source  = "li0nel/single-page-application/aws"
-  version = "0.0.1"
+  version = "0.0.2"
 
   stack_name  = "${var.stack_name}"
   aws_profile = "${var.aws_profile}"
