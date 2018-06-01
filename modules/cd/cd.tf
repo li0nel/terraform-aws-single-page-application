@@ -85,7 +85,7 @@ EOF
 //resource "aws_kms_key" "s3kmskey" {}
 
 resource "aws_codepipeline" "pipeline" {
-  name     = "wi5-codepipeline-${var.stack_name}"
+  name     = "${var.stack_name}"
   role_arn = "${aws_iam_role.iam_role.arn}"
 
   artifact_store {
