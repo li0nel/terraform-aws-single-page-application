@@ -148,7 +148,7 @@ EOF
 
 resource "aws_lambda_function" "lambda_at_edge" {
   filename         = "${data.archive_file.lambda.output_path}"
-  function_name    = "lambda-at-edge-${var.stack_name}"
+  function_name    = "${var.stack_name}-lambda-at-edge"
   role             = "${aws_iam_role.iam_role.arn}"
   handler          = "index.handler"
   runtime          = "nodejs6.10"
