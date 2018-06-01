@@ -22,13 +22,9 @@ provider "aws" {
 }
 
 module "spa_cdn" {
-  source = "https://github.com/li0nel/terraform-aws-single-page-application"
-
-  stack_name = "${var.stack_name}"
-
+  source      = "https://github.com/li0nel/terraform-aws-single-page-application"
+  stack_name  = "${var.stack_name}"
   aws_profile = "${var.aws_profile}"
-
-  aws_region = "${var.aws_region}"
-
+  aws_region  = "${var.aws_region}"
   domain_name = "${var.domain_name}"
 }

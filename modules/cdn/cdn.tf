@@ -34,6 +34,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
+
   logging_config {
     include_cookies = true
     bucket          = "${aws_s3_bucket.logs_bucket.bucket_domain_name}"
@@ -71,6 +72,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       restriction_type = "none"
     }
   }
+
   viewer_certificate {
     acm_certificate_arn = "${data.aws_acm_certificate.certificate.arn}"
     ssl_support_method  = "sni-only"
@@ -94,14 +96,14 @@ resource "aws_route53_record" "cdn_alias" {
 }
 
 data "archive_file" "lambda" {
-  type = "zip"
-  source_dir = "${path.module}/lambda_at_edge"
+  type        = "zip"
+  source_dir  = "${path.module}/lambda_at_edge"
   output_path = "${path.module}/lambda_at_edge.zip"
 }
 
-
 resource "aws_iam_role" "iam_role" {
   name = "iam_role"
+
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -121,7 +123,6 @@ resource "aws_iam_role" "iam_role" {
 }
 EOF
 }
-
 
 resource "aws_iam_role_policy" "lambda_role_policy" {
   name = "lambda-policy-${var.stack_name}"
@@ -144,7 +145,6 @@ resource "aws_iam_role_policy" "lambda_role_policy" {
 }
 EOF
 }
-
 
 resource "aws_lambda_function" "lambda_at_edge" {
   filename         = "${data.archive_file.lambda.output_path}"
