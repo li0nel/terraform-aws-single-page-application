@@ -1,4 +1,4 @@
-output "codecommit_repository_url" {
+output "aws_codecommit_repository_url" {
   value = "${module.cd.aws_codecommit_repository_url}"
 }
 
