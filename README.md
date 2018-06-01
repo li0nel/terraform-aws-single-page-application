@@ -34,7 +34,7 @@ module "single-page-application" {
 Run `terraform apply` then:
 
 ```bash
-git remote add codecommit $(terraform output aws_codecommit_repository)
+git remote add codecommit $(terraform output aws_codecommit_repository_url)
 
 git config --global credential.helper '!aws --profile YOUR_AWS_PROFILE codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
