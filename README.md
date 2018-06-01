@@ -20,16 +20,14 @@ Root module calls these modules which can also be used separately to create inde
 Create a `main.tf` file containing the following:
 
 ```hcl
-module "spa_cdn" {
-  source = "https://github.com/li0nel/terraform-aws-single-page-application"
+module "single-page-application" {
+  source  = "li0nel/single-page-application/aws"
+  version = "0.0.1"
 
-  stack_name = "spa"
-
-  aws_profile = "default"
-
-  aws_region = "eu-west-1"
-
-  domain_name = "mydomain.com"
+  stack_name  = "${var.stack_name}"
+  aws_profile = "${var.aws_profile}"
+  aws_region  = "${var.aws_region}"
+  domain_name = "${var.domain_name}"
 }
 ```
 
@@ -39,7 +37,6 @@ Run `terraform apply` then:
 git remote add codecommit $(terraform output aws_codecommit_repository)
 
 git config --global credential.helper '!aws --profile YOUR_AWS_PROFILE codecommit credential-helper $@'
-
 git config --global credential.UseHttpPath true
 
 git push codecommit YOUR_BRANCH:master
