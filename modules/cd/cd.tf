@@ -11,6 +11,15 @@ resource "aws_s3_bucket" "artifact" {
   }
 }
 
+resource "aws_s3_bucket" "codebuild_cache" {
+  bucket_prefix = "${var.stack_name}-cache-"
+  acl           = "private"
+
+  tags {
+    "app_name" = "${var.stack_name}"
+  }
+}
+
 resource "aws_iam_role" "iam_role" {
   name = "${var.stack_name}-codepipeline-role"
 
@@ -204,14 +213,18 @@ resource "aws_iam_policy_attachment" "codebuild_policy_attachment" {
 }
 
 resource "aws_codebuild_project" "codebuild" {
-  name = "wi5-${var.stack_name}-codebuild-project"
+  name = "${var.stack_name}"
 
-  //  description  = "test_codebuild_project"
   build_timeout = "5"
   service_role  = "${aws_iam_role.codebuild_role.arn}"
 
   artifacts {
     type = "CODEPIPELINE"
+  }
+
+  cache {
+    type     = "S3"
+    location = "${aws_s3_bucket.codebuild_cache.bucket}"
   }
 
   environment {
