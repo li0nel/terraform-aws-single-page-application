@@ -11,14 +11,14 @@ resource "aws_s3_bucket" "artifact" {
   }
 }
 
-resource "aws_s3_bucket" "codebuild_cache" {
-  bucket_prefix = "${var.stack_name}-cache-"
-  acl           = "private"
-
-  tags {
-    "app_name" = "${var.stack_name}"
-  }
-}
+//resource "aws_s3_bucket" "codebuild_cache" {
+//  bucket_prefix = "${var.stack_name}-cache-"
+//  acl           = "private"
+//
+//  tags {
+//    "app_name" = "${var.stack_name}"
+//  }
+//}
 
 resource "aws_iam_role" "iam_role" {
   name = "${var.stack_name}-codepipeline-role"
@@ -222,10 +222,10 @@ resource "aws_codebuild_project" "codebuild" {
     type = "CODEPIPELINE"
   }
 
-  cache {
-    type     = "S3"
-    location = "${aws_s3_bucket.codebuild_cache.bucket}"
-  }
+//  cache {
+//    type     = "S3"
+//    location = "${aws_s3_bucket.codebuild_cache.id}"
+//  }
 
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
