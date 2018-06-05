@@ -22,7 +22,7 @@ Create a `main.tf` file containing the following:
 ```hcl
 module "single-page-application" {
   source  = "li0nel/single-page-application/aws"
-  version = "0.0.1"
+  version = "0.0.6"
 
   stack_name  = "${var.stack_name}"
   aws_profile = "${var.aws_profile}"

@@ -4,4 +4,4 @@ aws_region = "eu-west-2"
 
 stack_name = "myapp"
 
-domain_name = "mydomainname.com"
+domain_name = "laravelaws.com"
