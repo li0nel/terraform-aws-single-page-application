@@ -47,7 +47,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "s3_origin"
-    compress = true
+    compress         = true
 
     forwarded_values {
       query_string = false
@@ -156,4 +156,34 @@ resource "aws_lambda_function" "lambda_at_edge" {
   source_code_hash = "${base64sha256(file("${data.archive_file.lambda.output_path}"))}"
   publish          = "true"
   provider         = "aws.us-east-1"
+}
+
+resource "aws_cloudwatch_dashboard" "main" {
+  provider       = "aws.us-east-1"
+  dashboard_name = "${aws_cloudfront_distribution.s3_distribution.domain_name}-dashboard"
+
+  dashboard_body = <<EOF
+  {
+    "widgets": [
+        {
+            "type": "metric",
+            "x": 0,
+            "y": 0,
+            "width": 24,
+            "height": 6,
+            "properties": {
+                "view": "timeSeries",
+                "stacked": true,
+                "metrics": [
+                    [ "AWS/CloudFront", "Requests", "Region", "Global", "DistributionId", "${aws_cloudfront_distribution.s3_distribution.id}" ],
+                    [ ".", "TotalErrorRate", ".", ".", ".", "." ],
+                    [ ".", "4xxErrorRate", ".", ".", ".", "." ],
+                    [ ".", "5xxErrorRate", ".", ".", ".", "." ]
+                ],
+                "region": "us-east-1"
+            }
+        }
+    ]
+}
+EOF
 }
