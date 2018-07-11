@@ -160,7 +160,7 @@ resource "aws_lambda_function" "lambda_at_edge" {
 
 resource "aws_cloudwatch_dashboard" "main" {
   provider       = "aws.us-east-1"
-  dashboard_name = "${aws_cloudfront_distribution.s3_distribution.domain_name}-dashboard"
+  dashboard_name = "distribution-${aws_cloudfront_distribution.s3_distribution.id}-dashboard"
 
   dashboard_body = <<EOF
   {
