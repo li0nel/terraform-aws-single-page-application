@@ -9,3 +9,7 @@ output "cloudfront_alias_domain_name" {
 output "cloudfront_distribution_id" {
   value = "${aws_cloudfront_distribution.s3_distribution.id}"
 }
+
+output "cloudfront_distribution_arn" {
+  value = "${aws_cloudfront_distribution.s3_distribution.arn}"
+}
