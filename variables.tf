@@ -13,3 +13,11 @@ variable "aws_profile" {
 variable "domain_name" {
   type = "string"
 }
+
+variable "suffixes" {
+  type = "map"
+  default = {
+    default = ""
+    staging = "-staging"
+  }
+}

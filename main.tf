@@ -13,7 +13,7 @@ provider "aws" {
 
 module "cdn" {
   source      = "./modules/cdn"
-  stack_name  = "${var.stack_name}"
+  stack_name  = "${var.stack_name}${lookup(var.suffixes, terraform.workspace, "")}"
   s3_bucket   = "${module.s3.s3_bucket}"
   domain_name = "${var.domain_name}"
 }
