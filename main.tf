@@ -20,5 +20,5 @@ module "cdn" {
 
 module "s3" {
   source     = "./modules/s3"
-  stack_name = "${var.stack_name}"
+  stack_name = "${var.stack_name}${lookup(var.suffixes, terraform.workspace, "")}"
 }
