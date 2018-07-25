@@ -21,3 +21,11 @@ output "cloudfront_distribution_arn" {
 output "cloudfront_distribution_id" {
   value = "${module.cdn.cloudfront_distribution_id}"
 }
+
+output "aws_iam_access_key" {
+  value = "${module.iam.aws_iam_access_key}"
+}
+
+output "aws_iam_access_secret" {
+  value = "${module.iam.aws_iam_access_secret}"
+}

@@ -22,3 +22,10 @@ module "s3" {
   source     = "./modules/s3"
   stack_name = "${var.stack_name}${lookup(var.suffixes, terraform.workspace, "")}"
 }
+
+module "iam" {
+  source              = "./modules/iam"
+  s3_bucket           = "${module.s3.s3_bucket}"
+  cf_distribution_arn = "${module.cdn.cloudfront_distribution_arn}"
+  stack_name          = "${var.stack_name}${lookup(var.suffixes, terraform.workspace, "")}"
+}

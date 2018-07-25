@@ -16,6 +16,7 @@ variable "domain_name" {
 
 variable "suffixes" {
   type = "map"
+
   default = {
     default = ""
     staging = "-staging"
