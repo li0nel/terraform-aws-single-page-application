@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "logs_bucket" {
 }
 
 data "aws_acm_certificate" "certificate" {
-  domain      = "*.cdn.${var.domain_name}"
+  domain      = "*.${var.domain_name}"
   types       = ["AMAZON_ISSUED"]
   most_recent = true
   provider    = "aws.us-east-1"
@@ -41,7 +41,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     prefix          = "cloudfront_logs"
   }
 
-  aliases = ["${var.stack_name}.cdn.${var.domain_name}"]
+  aliases = ["${var.stack_name}.${var.domain_name}"]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
@@ -86,7 +86,7 @@ data "aws_route53_zone" "cdn" {
 
 resource "aws_route53_record" "cdn_alias" {
   zone_id = "${data.aws_route53_zone.cdn.zone_id}"
-  name    = "${var.stack_name}.cdn.${var.domain_name}"
+  name    = "${var.stack_name}.${var.domain_name}"
   type    = "A"
 
   alias {
